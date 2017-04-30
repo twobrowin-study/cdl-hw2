@@ -13,7 +13,7 @@ int token_scan(char *tokens_str, const char *code) {
     ' ', ';', ':', '=', '(', ')', ','
   };
   char *separators_tokens[10] = {
-    "", ";_", ":_", "=_", "(_", ")_", ",_"
+    "\0", "\0", "\0", "=_", "(_", ")_", "\0"
   };
   char *number_token = "N_";
   char *char_token = "C_";
