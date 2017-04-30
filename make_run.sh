@@ -1,2 +1,2 @@
 #!/bin/sh
-./make.sh && ./main $1
+./make.sh && ./main "$1"
