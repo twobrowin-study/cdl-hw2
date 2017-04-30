@@ -7,13 +7,13 @@ int token_scan(char *tokens_str, const char *code) {
     "const", "record", "integer", "char", "end"
   };
   char *servise_tokens[5] = {
-    "CT", "RC", "IT", "CH", "ED"
+    "CT", "RC@@$$", "IT@@$$", "CH@@$$", "ED"
   };
   char separators[10] = {
     ' ', ';', ':', '=', '(', ')', ','
   };
   char *separators_tokens[10] = {
-    "\0", "\0", "\0", "=_", "(_", ")_", "\0"
+    "\0", "\0", "\0", "=_", "(_@@", ")_", "\0"
   };
   char *number_token = "N_";
   char *char_token = "C_";
@@ -35,6 +35,11 @@ int token_scan(char *tokens_str, const char *code) {
     for(int i = 0; i < 5; i++)
       if(!strcmp(servise_words[i], lexeme) && servise_word_sought){
         printf("Служебное слово %s\n", servise_words[i]);
+        if(i == 4) { // Обработка специального синтаксиса при служебном слове end
+          int tokens_str_pos = strlen(tokens_str) - 1;
+          tokens_str[tokens_str_pos] = '\0';
+          tokens_str[tokens_str_pos - 1] = '\0';
+        }
         strcat(tokens_str, servise_tokens[i]);
         servise_word_sought = 0;
       }
