@@ -30,10 +30,8 @@ int token_scan(char *tokens_str, const char *code) {
       code_pos++; lexeme_pos++;
     }
 
-    // Переменные состояния лексичесткого анализа
-    int servise_word_sought = 1, is_number = 0, is_char = 0, is_var = 0;
-
     // Выяснение принадлежности лексемы служебным словам
+    int servise_word_sought = 1;
     for(int i = 0; i < 5; i++)
       if(!strcmp(servise_words[i], lexeme) && servise_word_sought){
         printf("Служебное слово %s\n", servise_words[i]);
@@ -41,31 +39,35 @@ int token_scan(char *tokens_str, const char *code) {
         servise_word_sought = 0;
       }
 
-    if(servise_word_sought) {
+    // Переменные состояния лексичесткого анализа
+    int is_num = 0, is_ch = 0, is_var = 0, not_empty = strcmp(lexeme, "\0");
+
+    if(not_empty && servise_word_sought) {
       // Выяснение принадлежности лексемы к числам
-      if(atoi(lexeme) || !strcmp(lexeme, "0")) {
+      if(is_num = is_number(lexeme)) {
         printf("Число %s\n", lexeme);
         strcat(tokens_str, number_token);
-        is_number = 1;
       }
 
       // Выяснение принадлежности лексемы к символам
       char char_form = '\0';
-      if(!is_number && (char_form = find_char_form(lexeme))) {
+      if(!is_num && (is_ch = is_char(lexeme, &char_form))) {
         printf("Символ %c\n", char_form);
         strcat(tokens_str, char_token);
-        is_char = 1;
       }
 
       // Определение принадлежности лексемы к идентификаторам
-      if((!is_number && !is_char) && (is_var = is_varable(lexeme))) {
+      if((!is_num && !is_ch) && (is_var = is_varable(lexeme))) {
         printf("Переменная %s\n", lexeme);
         strcat(tokens_str, varible_token);
       }
     }
 
-    if(servise_word_sought && !is_number && !is_char && !is_var)
+    if(not_empty && servise_word_sought && !is_num && !is_ch && !is_var) {
+      char *error_message[2] = { "Нераспознаный идентификатор:", lexeme };
+      error(2, error_message);
       return 0;
+    }
 
     // Добвление токена разделителя при необходимости
     if(separator_num > 1) {
