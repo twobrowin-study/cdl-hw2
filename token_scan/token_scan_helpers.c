@@ -25,7 +25,7 @@ int is_varable(char *lexeme) {
   while((state != -1) && (state != 10) && (pos < strlen(lexeme)+1)) {
     if(is_letter(lexeme[pos]))
       collumn = 0;
-    else if(is_numeral(lexeme[pos]))
+    else if(is_numeral(lexeme[pos]) || (lexeme[pos] == '_'))
       collumn = 1;
     else if(lexeme[pos] == '\0')
       collumn = 2;
