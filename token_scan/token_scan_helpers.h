@@ -6,3 +6,4 @@ int is_varable(char *lexeme);
 int is_number(char *lexeme);
 int is_letter(char ch);
 int is_numeral(char ch);
+int include_colon(char *tokens_str);

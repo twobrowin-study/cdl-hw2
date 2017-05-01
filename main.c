@@ -16,13 +16,13 @@ int main(int argc, char const *argv[]) {
   if(token_scan(token_code, argv[1])) {
     puts("\nТекст после сканирования");
     puts(token_code);
-    if(syntax_analyzer(token_code))
-      puts("\nТекст является типизированной константой - записью");
-    else {
-      char *error_message = "Ошибка синтаксического анализа";
-      error(1, &error_message);
-      puts("\nТекст не является типизированной константой - записью");
-    }
+    // if(syntax_analyzer(token_code))
+    //   puts("\nТекст является типизированной константой - записью");
+    // else {
+    //   char *error_message = "Ошибка синтаксического анализа";
+    //   error(1, &error_message);
+    //   puts("\nТекст не является типизированной константой - записью");
+    // }
   }
   else {
     char *error_message = "Ошибка лексического анализа";

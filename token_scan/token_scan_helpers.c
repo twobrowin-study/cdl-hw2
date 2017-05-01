@@ -77,3 +77,10 @@ int is_numeral(char ch) {
     return 1;
   return 0;
 }
+
+int include_colon(char *tokens_str) {
+  int pos = strlen(tokens_str) - 1;
+  if(tokens_str[pos-1] == ':') {
+    tokens_str[pos-1] = '\0';
+  }
+}
