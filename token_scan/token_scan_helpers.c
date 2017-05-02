@@ -84,3 +84,12 @@ int include_colon(char *tokens_str) {
     tokens_str[pos-1] = '\0';
   }
 }
+
+int semicolon_near(const char *code, int *code_pos) {
+  while(code[*code_pos] == ' ') {
+    *code_pos += 1;
+  }
+  if(code[*code_pos] == ';')
+    return 1;
+  return 0;
+}

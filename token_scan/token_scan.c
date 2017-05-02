@@ -4,16 +4,16 @@ int token_scan(char *tokens_str, const char *code) {
   puts("\nСканирование исходного текста:");
 
   char *servise_words[5] = {
-    "record", "integer", "char", "const", "end"
+    "integer", "char", "record", "end", "const"
   };
   char *servise_tokens[5] = {
-    "RC@@", "IT@@", "CH@@", "CT", "ED"
+    "IT", "CH", "RC", "ED", "CT"
   };
-  char separators[8] = {
-    ' ', ';', ':', '=', '(', ')', ',', ';'
+  char separators[7] = {
+    ' ', ';', ':', '=', '(', ')', ','
   };
-  char *separators_tokens[8] = {
-    "\0", ";_", ":_", "=_", "(_", ")_", ",_", ";@"
+  char *separators_tokens[7] = {
+    "\0", "\0", ":_", "=_", "(_", ")_", ",_"
   };
   char *number_token = "N_";
   char *char_token = "C_";
@@ -30,9 +30,12 @@ int token_scan(char *tokens_str, const char *code) {
       code_pos++; lexeme_pos++;
     }
 
-    // Обработка вколючения ; поле )
-    if((code[code_pos-1] == ')') && (code[code_pos] == ';'))
-      separator_num = 8;
+    // Обработка включения ; поле )
+    if((code[code_pos-1] == ')') && !semicolon_near(code, &code_pos)) {
+      char *error_message[1] = { "После ')' ожидалось ';'" };
+      error(1, error_message);
+      return 0;
+    }
 
     // Выяснение принадлежности лексемы служебным словам
     int servise_word_sought = 1;
@@ -40,9 +43,18 @@ int token_scan(char *tokens_str, const char *code) {
       if(!strcmp(servise_words[i], lexeme) && servise_word_sought){
         if(i < 3) // Обработка включения служебного символа : в служебныйе слова record, integer, char
           include_colon(tokens_str);
-        printf("Служебное слово %s\n", servise_words[i]);
-        strcat(tokens_str, servise_tokens[i]);
-        servise_word_sought = 0;
+
+        // Обработка включения ; после integer или char
+        if((i >= 2) || (i < 2) && semicolon_near(code, &code_pos)) {
+          printf("Служебное слово %s\n", servise_words[i]);
+          strcat(tokens_str, servise_tokens[i]);
+          servise_word_sought = 0;
+        }
+        else {
+          char *error_message[3] = { "После", servise_words[i], "ожидалось ';'" };
+          error(3, error_message);
+          return 0;
+        }
       }
 
     // Переменные состояния лексичесткого анализа
@@ -68,6 +80,10 @@ int token_scan(char *tokens_str, const char *code) {
         strcat(tokens_str, varible_token);
       }
     }
+
+    // Проверка на наличие , после char или integer
+    if((is_num || is_ch) && (separator_num == 7))
+      separator_num = 1;
 
     if(not_empty && servise_word_sought && !is_num && !is_ch && !is_var) {
       char *error_message[2] = { "Нераспознаный идентификатор:", lexeme };

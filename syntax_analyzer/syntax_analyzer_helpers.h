@@ -5,7 +5,5 @@
 int curtail(char *curtail_code);
 int get_notion(char *curtail_code, char *notion);
 int print_syntax_elemnt(char element);
-int state_from_token(char *token);
-int column_from_token(char *token);
-int transition_symbol(int transition, char *symbol);
+int column_from_token(char *token, char **not_null_tokens, int not_null_tokens_count);
 int is_in(int num, int *array, int len);
