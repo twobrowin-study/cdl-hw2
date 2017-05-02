@@ -1,3 +1,5 @@
+# Материалы, использованные при решении
+
 # Пример
   const uu:record x,y:integer;ch:char;end = (x:6, y:8, ch:'u')
 
