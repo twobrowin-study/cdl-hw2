@@ -1,4 +1,4 @@
-, 7#include "./token_scan.h"
+#include "./token_scan.h"
 
 int token_scan(char *tokens_str, const char *code) {
   puts("\nСканирование исходного текста:");
