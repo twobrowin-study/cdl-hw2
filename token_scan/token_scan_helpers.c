@@ -1,7 +1,7 @@
 #include "./token_scan_helpers.h"
 
-int equal_separators(char cmpr, char *separators) {
-  for(int i = 0; i < 10; i++)
+int equal_separators(char cmpr, char *separators, int separators_count) {
+  for(int i = 0; i < separators_count; i++)
     if(cmpr == separators[i])
       return i+1;
   return 0;
