@@ -1,6 +1,6 @@
 #include "string.h"
 
-int equal_separators(char cmpr, char *separators);
+int equal_separators(char cmpr, char *separators, int separators_count);
 int is_char(char *lexeme, char *char_form);
 int is_varable(char *lexeme);
 int is_number(char *lexeme);
