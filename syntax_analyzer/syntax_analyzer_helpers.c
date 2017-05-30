@@ -1,7 +1,7 @@
 #include "syntax_analyzer_helpers.h"
 
 int curtail(char *curtail_code) {
-  char notion[2], correct_notion[2], syntax_element = curtail_code[strlen(curtail_code) - 1];
+  char notion[3], correct_notion[3], syntax_element = curtail_code[strlen(curtail_code) - 1];
   memset(correct_notion,0,sizeof(correct_notion));
   correct_notion[1] = syntax_element;
   correct_notion[2] = '\0';
