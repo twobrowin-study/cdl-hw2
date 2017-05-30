@@ -1,4 +1,4 @@
-#include "./token_scan.h"
+, 7#include "./token_scan.h"
 
 int token_scan(char *tokens_str, const char *code) {
   puts("\nСканирование исходного текста:");
@@ -25,7 +25,7 @@ int token_scan(char *tokens_str, const char *code) {
     // Получение очередной лексемы
     memset(lexeme,0,sizeof(lexeme));
     int lexeme_pos = 0, separator_num;
-    while(!(separator_num = equal_separators(code[code_pos], separators))) {
+    while(!(separator_num = equal_separators(code[code_pos], separators, 7))) {
       lexeme[lexeme_pos] = code[code_pos];
       code_pos++; lexeme_pos++;
     }
